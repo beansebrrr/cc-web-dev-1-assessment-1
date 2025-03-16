@@ -3,17 +3,15 @@
   --nav-hover: #b6b2e3;
   --main-dark: #130d26;
   --accent: #403a80;
+  --sidebar-bg: #29235c;
+  --default-padding-inline: min(5rem, 8vw); 
 }
 
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-}
 
 body {
   font-family: Arial, sans-serif;
   max-width: 100vw;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   /* Using CSS grids to lay out the sections */
@@ -24,8 +22,10 @@ body {
 
 body > * {
   /* so that everything has a consistent padding */
-  padding-inline: min(5rem, 8%);
+  padding-inline: var(--default-padding-inline);
 }
+
+/* Header and Footer shares a lot of characteristics */
 
 header,
 footer {
@@ -41,6 +41,11 @@ footer {
 header *,
 footer * {
   margin: 0;
+}
+
+footer {
+  background-color: var(--main-dark);
+  margin-top: auto;
 }
 
 footer * {
@@ -77,17 +82,19 @@ nav > ul a:hover {
 /* Gap between "Welcome" and "Line up" section */
 main,
 aside {
-  --half-padding: calc(min(5rem, 8%) / 2);
+  --half-padding: calc(var(--default-padding-inline) / 2);
+  padding-block: 1.5rem;
 }
 
 main {
-  grid-column: 1  / 8;
+  grid-column: 1  / 9;
   padding-inline-end: var(--half-padding);
 }
 
-aside {
-  grid-column: 8 / last;
-  padding-inline-start: var(--half-padding);
+
+h1 {
+  margin-top: 0;
+  text-decoration: underline;
 }
 
 /* Default styling removed */
@@ -110,9 +117,22 @@ figcaption a {
   color: var(--accent);
 }
 
+/* Sidebar */
+aside {
+  grid-column: 9 / last;
+  padding-inline: var(--half-padding);
+  background-color: var(--sidebar-bg);
+  margin-block: 2rem;
+  color: var(--main-light);
+}
+
+aside ul {
+  list-style-type: square;
+}
+
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 0.5rem;
 }
 
