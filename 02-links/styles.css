@@ -1,3 +1,8 @@
+:root {
+  --main-light: #ffffff;
+  --background-gradient: linear-gradient(#6a9eff, #74ffb3);
+}
+
 @font-face {
   font-family: 'Metamorphous';
   src: url(./fonts/metamorphous-v20-latin-regular.woff2);
@@ -12,7 +17,7 @@
 
 *::selection {
   background-color: #6c5aad;
-  color: #ffffff;
+  color: var(--main-light);
 }
 
 body {
@@ -20,7 +25,7 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background: linear-gradient(#6a9eff, #74ffb3);
+  background: var(--background-gradient);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,7 +50,7 @@ nav {
 nav #logo {
   font-family: 'Metamorphous', 'Times New Roman', Times, serif;
   font-size: 2rem;
-  color: #ffffff;
+  color: var(--main-light);
   text-decoration: none;
   transition: font-size 300ms ease;
   user-select: none;
@@ -87,34 +92,32 @@ section h1, section h2 {
   margin-top: 0;
 }
 
-section article {
+.card {
   background-color: #f0f8ff33;
   backdrop-filter: blur(16px);
   box-shadow: #0002 0 2px 1rem 0.5rem;
   padding: min(2rem, 5%);
   border-radius: 8px;
+}
+
+.char-card {
+  height: 100%;
+}
+
+section article {
   width: 60ch;
   height: 100%;
 }
 
 #char-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   place-items: center;
-}
-
-.char-card {
-  background-color: #f0f8ff33;
-  backdrop-filter: blur(16px);
-  box-shadow: #0002 0 2px 1rem 0.5rem;
-  padding: min(2rem, 5%);
-  border-radius: 8px;
-  height: 100%;
 }
 
 #crunchyroll {
   padding: 0.75em 1.5em;
-  color: #ffffff;
+  color: var(--main-light);
   font-size: 1rem;
   background-color: #ff9900;
   backdrop-filter: blur(16px);
@@ -136,7 +139,7 @@ footer {
 }
 
 footer * {
-  color: #ffffff;
+  color: var(--main-light);
   margin: 0;
   text-align: center;
 }
