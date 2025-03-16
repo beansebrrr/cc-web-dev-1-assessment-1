@@ -1,0 +1,142 @@
+@font-face {
+  font-family: 'Metamorphous';
+  src: url(./fonts/metamorphous-v20-latin-regular.woff2);
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  line-height: 1.75;
+}
+
+*::selection {
+  background-color: #6c5aad;
+  color: #ffffff;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(#6a9eff, #74ffb3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background-color: #f0f8ff44;
+  backdrop-filter: blur(16px);
+  box-shadow: #0003 0 2px 2rem 1rem;
+  z-index: 10;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+nav #logo {
+  font-family: 'Metamorphous', 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  color: #ffffff;
+  text-decoration: none;
+  transition: font-size 300ms ease;
+  user-select: none;
+}
+
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #000;
+  transition: opacity 200ms linear;
+}
+
+.nav-list a:hover {
+  opacity: 0.7;
+}
+
+main {
+  margin: 2rem min(10rem, 8%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+section {
+  width: 100%;
+  gap: 1rem;
+  display: grid;
+  place-items: center;
+}
+
+section h1, section h2 {
+  margin-top: 0;
+}
+
+section article {
+  background-color: #f0f8ff33;
+  backdrop-filter: blur(16px);
+  box-shadow: #0002 0 2px 1rem 0.5rem;
+  padding: min(2rem, 5%);
+  border-radius: 8px;
+  width: 60ch;
+  height: 100%;
+}
+
+#char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  place-items: center;
+}
+
+.char-card {
+  background-color: #f0f8ff33;
+  backdrop-filter: blur(16px);
+  box-shadow: #0002 0 2px 1rem 0.5rem;
+  padding: min(2rem, 5%);
+  border-radius: 8px;
+  height: 100%;
+}
+
+#crunchyroll {
+  padding: 0.75em 1.5em;
+  color: #ffffff;
+  font-size: 1rem;
+  background-color: #ff9900;
+  backdrop-filter: blur(16px);
+  box-shadow: #ffe2c2 0 4px, rgba(255, 165, 29, 0.327) 0 2px 1rem 0.5rem;
+  border-radius: 8px;
+  border: #ffe2c2 solid 2px;
+  transition: box-shadow 100ms linear, transform 100ms linear;
+}
+#crunchyroll:active {
+  filter: brightness(0.9);
+  transform: translateY(4px);
+  box-shadow: rgba(255, 165, 29, 0.327) 0 2px 1.5rem 0.75rem ;
+}
+
+footer {
+  width: 100%;
+  padding: 2rem 2rem 1rem;
+  background: linear-gradient(transparent, #00000088);
+}
+
+footer * {
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
