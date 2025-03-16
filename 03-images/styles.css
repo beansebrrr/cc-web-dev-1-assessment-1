@@ -1,0 +1,133 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body>* {
+  padding-inline: min(5rem, 8%);
+  margin-bottom: 3rem;
+}
+
+main,
+.grid,
+figure>* {
+  width: 100%;
+}
+
+/****** NAVIGATION HEADER ******/
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #b793ff;
+  color: #ffffff;
+  padding-block: 1.5rem;
+}
+
+nav span {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+nav ul * {
+  color: inherit;
+  text-decoration: none;
+}
+
+/****** IMAGES SECTION ******/
+
+.sect-header {
+  margin-bottom: 2rem;
+}
+.sect-header * {
+  margin: 0;
+  padding: 0;
+}
+
+/* To organize the images properly */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  justify-content: center;
+  place-items: start center;
+}
+
+/* remove default margins */
+figure {
+  margin: 0;
+}
+
+.filter-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/****** BONUS SECTION ******/
+
+/* base styles */
+.styled-div {
+  font-size: 1.5rem;
+  border: 4px solid black;
+  line-height: 100px;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+}
+
+#a {
+  border: #8a2ae3 solid 4px;
+  box-shadow: #ff0000 1rem 1rem 1rem;
+}
+
+#b {
+  border: #00ff00 solid 4px;
+  box-shadow: inset #000000 0.5rem 0.5rem 0.5rem;
+}
+
+#c {
+  border: #ff8800 solid 4px;
+  border-radius: 8px;
+  /* To simulate multiple borders */
+  box-shadow:
+    #0000ff 0 0 0 8px,
+    #ff0000 0 0 0 16px,
+    #008000 0 0 0 24px;
+}
+
+#d {
+  border: #b22222 solid 4px;
+  text-shadow: #000000 4px 4px 2px;
+}
+
+/****** FOOTER ******/
+
+footer {
+  display: flex;
+  background-color: #000000;
+  margin: 0;
+  color: white;
+  justify-content: center;
+}
