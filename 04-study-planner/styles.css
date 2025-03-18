@@ -3,7 +3,20 @@
   --main-dark: #000000;
   --accent-primary: #ff865a;
   --accent-secondary: #6c3ca7;
+
+  --timer-color-work: #ff4545;
+  --timer-color-work-shadow: #c600109e;
+  --timer-color-rest: #ffd445;
+
   --padx: min(8vw, 5rem);
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Doto';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/doto-v1-latin-700.woff2') format('woff2');
 }
 
 *,
@@ -33,10 +46,6 @@ main {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: calc(var(--padx) / 2);
-}
-
-main>* {
-  border: var(--accent-secondary) solid 2px;
 }
 
 footer {
@@ -85,6 +94,89 @@ nav ul a:hover::before {
 }
 
 /* ----------- Pomodoro Timer ----------- */
+
+#timer {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  background-color: var(--timer-color-work);
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  /* user-select: none; */
+}
+
+#timer .mode {
+  background-color: var(--timer-color-work-shadow);
+  border-radius: inherit;
+  border: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer .mode * {
+  width: 2rem;
+  fill: var(--main-light);
+}
+
+#timer .mode.rest {
+  grid-area: 1 / 1;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#timer .mode.work {
+  grid-area: 2 / 1;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#timer .mode.current-mode {
+  background-color: var(--timer-color-work);
+}
+
+#timer .display {
+  grid-row: 1 / 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer .display span {
+  font-family: 'Doto';
+  color: var(--main-light);
+  font-size: 4rem;
+}
+
+#timer .play-pause {
+  aspect-ratio: 1 / 1;
+  height: 2rem;
+  padding: 0.25rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  border: none;
+  border-radius: 50%;
+  background-color: inherit;
+  fill: var(--timer-color-work-shadow);
+  transition: fill 100ms ease-out;
+}
+
+#timer .play-pause * {
+  width: 100%;
+  height: 100%;
+}
+
+#timer .play-pause:hover {
+  fill: var(--main-light);
+}
 
 /* ----------- Footer ----------- */
 
