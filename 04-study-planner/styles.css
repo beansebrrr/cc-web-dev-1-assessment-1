@@ -1,3 +1,11 @@
+:root {
+  --main-light: #ffffff;
+  --main-dark: #000000;
+  --accent-primary: #ff865a;
+  --accent-secondary: #6c3ca7;
+  --padx: min(8vw, 5rem);
+}
+
 *,
 *::after,
 *::before {
@@ -8,4 +16,80 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > * {
+  padding-inline: var(--padx);
+  padding-block: 1rem;
+}
+
+/* ----------- Sectioning ----------- */
+
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: calc(var(--padx) / 2);
+}
+
+main>* {
+  border: var(--accent-secondary) solid 2px;
+}
+
+footer {
+  margin-top: auto;
+}
+
+/* ----------- Navigation Header ----------- */
+
+header {
+  background-color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav ul a {
+  color: var(--main-light);
+  text-decoration: none;
+  position: relative;
+}
+
+nav ul a::before {
+  content: "";
+  position: absolute;
+  bottom: -5%;
+  left: 0;
+  background-color: var(--main-light);
+  border-radius: 1.5px;
+  width: 0;
+  height: 1.5px;
+  opacity: 0;
+  transition: width 200ms ease-out;
+}
+
+nav ul a:hover::before {
+  opacity: 1;
+  width: 100%;
+}
+
+/* ----------- Pomodoro Timer ----------- */
+
+/* ----------- Footer ----------- */
+
+footer {
+  background-color: var(--main-dark);
+  color: var(--main-light);
+  text-align: center;
 }
