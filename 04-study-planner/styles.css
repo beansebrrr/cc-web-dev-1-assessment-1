@@ -4,7 +4,7 @@
   --main-dark: #000000;
   --secondary-dark: #444444;
   --accent-primary: #ff865a;
-  --accent-secondary: #6c3ca7;
+  --selection: #3ca757;
 
   --padx: min(8vw, 5rem);
 }
@@ -21,6 +21,11 @@
 *::after,
 *::before {
   box-sizing: border-box;
+}
+
+*::selection {
+  background-color: var(--selection);
+  color: var(--main-light);
 }
 
 body {
@@ -280,7 +285,7 @@ nav ul a:hover::before {
 #notes .note {
   --background: #ffe54f;
   --shadow: #b0610066;
-    
+
   background-color: var(--background);
   aspect-ratio: 1 / 1;
   width: 100%;
@@ -314,13 +319,15 @@ footer {
   text-align: center;
 }
 
+/* ----------- Media Queries ----------- */
+
 @media screen and (max-width: 1000px) {
   main {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 700px) {
   main {
     grid-template-columns: 100%;
     grid-auto-flow: row;
