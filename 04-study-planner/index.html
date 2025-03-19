@@ -12,6 +12,7 @@
 <body>
   <header>
     <span class="header-icon">
+      <!-- Lollipop Icon -->
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_1_37)">
         <path d="M33.88 38.1218L33.8802 38.122C34.4427 38.6842 35.2055 39 36.0009 39C36.7962 39 37.559 38.6842 38.1215 38.122L38.122 38.1215C38.6842 37.559 39 36.7962 39 36.0009C39 35.2055 38.6842 34.4427 38.122 33.8802L38.1218 33.88L28.5149 24.2721C30.0854 21.9005 31.0003 19.0558 31.0003 16.0001C31.0003 7.71508 24.2841 1 16.0001 1C7.71619 1 1 7.71508 1 16.0001C1 24.2831 7.7161 31.0003 16.0001 31.0003C19.0563 31.0003 21.901 30.0853 24.2725 28.5147L33.88 38.1218Z" fill="black" stroke="black" stroke-width="2"/>
@@ -28,6 +29,7 @@
       </svg>
     </span>
     <nav>
+      <!-- Navigation links -->
       <ul>
         <li><a href="#">Dashboard</a></li>
         <li><a href="#">History</a></li>
@@ -37,6 +39,7 @@
   </header>
   <main>
     <section id="pomodoro">
+      <!-- Pomodoro Timer -->
       <div id="timer">
         <button class="mode rest">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 64c0-17.7 14.3-32 32-32l320 0 64 0c70.7 0 128 57.3 128 128s-57.3 128-128 128l-32 0c0 53-43 96-96 96l-192 0c-53 0-96-43-96-96L96 64zM480 224l32 0c35.3 0 64-28.7 64-64s-28.7-64-64-64l-32 0 0 128zM32 416l512 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 480c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
@@ -44,21 +47,30 @@
         <button class="mode work current-mode">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 32C92.7 32 64 60.7 64 96l0 256 64 0 0-256 384 0 0 256 64 0 0-256c0-35.3-28.7-64-64-64L128 32zM19.2 384C8.6 384 0 392.6 0 403.2C0 445.6 34.4 480 76.8 480l486.4 0c42.4 0 76.8-34.4 76.8-76.8c0-10.6-8.6-19.2-19.2-19.2L19.2 384z"/></svg>
         </button>
+        <!-- Timer display, doesn't work -->
         <div class="display">
           <span>25:00</span>
         </div>
+
+        <!-- Play-pause button -->
         <button class="play-pause">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112L0 400c0 26.5 21.5 48 48 48l32 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48L48 64zm192 0c-26.5 0-48 21.5-48 48l0 288c0 26.5 21.5 48 48 48l32 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48l-32 0z"/></svg>
         </button>
       </div>
       <ul id="todo-list">
+
+        <!-- Task 1 -->
         <li class="task">
           <button class="checkbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></button>
-          <div class="task-info"><span class="task-name">Super important quiz</span></div></li>
+          <div class="task-info"><span class="task-name">Super important quiz</span></div>
+        </li>
+
+        <!-- Task 2 -->
         <li class="task">
           <button class="checkbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></button>
           <div class="task-info">
             <span class="task-name">Assessment 1</span>
+            <!-- Sub-tasks -->
             <ul class="sub-task-list">
               <li class="sub-task checked"><span class="task-name">Chapter 1</span></li>
               <li class="sub-task">Chapter 2</li>
@@ -69,6 +81,8 @@
             </ul>
           </div>
         </li>
+
+        <!-- Task 3 (completed by default) -->
         <li class="task checked">
           <button class="checkbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></button>
           <div class="task-info">
@@ -77,8 +91,10 @@
       </ul>
     </section>
     <section id="notes">
+
+      <!-- Just an example note. Duplicated with JavaScript to fill the grid -->
       <div class="note">
-        <h1>Lesson</h1>
+        <h1>Web Programming</h1>
         <p>
           HTML, CSS, and JavaScript. They
           have different purposes, and work

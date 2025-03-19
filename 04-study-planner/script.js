@@ -17,7 +17,7 @@ subTasks.forEach(subTask => {
   })
 })
 
-/* Cloning the notes to speed things up. */
+/* Cloning the notes to fill the grid. */
 const note = document.querySelector(".note")
 
 for (let i = 0; i < 10; i++) {
