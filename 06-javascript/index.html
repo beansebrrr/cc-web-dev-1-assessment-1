@@ -15,16 +15,21 @@
   </header>
   <main>
     <form id="petrol-calculator">
+      <!-- Dividing the inputs into groups for styling purposes -->
       <div class="input-group">
         <label for="cost-per-litre">Cost per litre</label>
         <input type="number" step="0.01" name="cost-per-litre" id="cost-per-litre">
       </div>
+
       <div class="input-group">
-        <label for="litres">Quantity</label>
+        <label for="litres">No. of Litres</label>
         <input type="number" step="0.01" name="litres" id="litres">
       </div>
-      <button type="submit" id="evaluate">Calculate</button>
+
+      <button type="submit" id="evaluate">Get total cost</button>
     </form>
+
+    <!-- User will see the total price here (duh) -->
     <p id="output">Total Price goes here!</p>
   </main>
 </body>
