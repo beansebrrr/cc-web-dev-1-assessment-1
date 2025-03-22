@@ -10,8 +10,22 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <main>
+  <header>
     <h1>⛽ Gas Prices ⛽</h1>
+  </header>
+  <main>
+    <form id="petrol-calculator">
+      <div class="input-group">
+        <label for="cost-per-litre">Cost per litre</label>
+        <input type="number" step="0.01" name="cost-per-litre" id="cost-per-litre">
+      </div>
+      <div class="input-group">
+        <label for="litres">Quantity</label>
+        <input type="number" step="0.01" name="litres" id="litres">
+      </div>
+      <button type="submit" id="evaluate">Calculate</button>
+    </form>
+    <p id="output">Total Price goes here!</p>
   </main>
 </body>
 </html>
