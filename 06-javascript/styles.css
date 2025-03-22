@@ -4,10 +4,174 @@
   box-sizing: border-box;
 }
 
+*::selection {
+  background-color: var(--text-alt-light);
+  color: var(--text-main-dark);
+}
+
+/* LCD Font */
+@font-face {
+  font-family: 'Digital-7 Mono';
+  src: url('fonts/Digital-7Mono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Funnel Display Font */
+@font-face {
+  font-family: 'Funnel Display';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/Funnel-Display-regular.woff2') format('woff2');
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  appearance: none;
+  margin: 0; 
+}
+
+/* Some variables I might use */
+:root {
+  --background-main: #c23c3c;
+  --text-main-light: #000000;
+  --text-alt-light: #333333;
+  --text-main-dark: #ffffff;
+  --text-alt-dark: #dddddd;
+  
+  /* Defaults */
+  background-color: var(--background-main);
+  font-family: 'Funnel Display', Helvetica, Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
+header {
+  color: var(--text-main-dark);
+  text-align: center;
+}
 
+form#petrol-calculator {
+  --border-dark: #afafaf;
+  --border-light: #f4f4f4;
+  --shadow-color: #7c0038b3;
+  --border-thickness: 12px;
+
+  background-color: var(--text-alt-dark);
+  width: min(90%, 800px);
+  margin: auto;
+  padding: 3rem 1.5rem;
+  border-radius: 24px;
+
+  /* 3D effect on borders */
+  border-top: var(--border-light) solid var(--border-thickness);
+  border-left: var(--border-light) solid var(--border-thickness);
+  border-bottom: var(--border-dark) solid var(--border-thickness);
+  border-right: var(--border-dark) solid var(--border-thickness);
+  box-shadow: var(--shadow-color) 0 0 24px 6px;
+}
+
+.input-group {
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 1rem;
+}
+
+.input-group label {
+  grid-column: 1 / last;
+  color: var(--text-main-light);
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.input-group input[type=number] {
+  --lcd-background: #3a3f3a;
+  --lcd-text: #bad2b2;
+
+  font-family: 'Digital-7 Mono', 'Courier New', Courier, monospace;
+  font-size: 5rem;
+  text-align: right;
+  grid-column: span 2;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--lcd-background);
+  color: var(--lcd-text);
+  border: none;
+  border-radius: 8px;
+  box-shadow: inset #0005 4px 4px 8px,
+              inset #fff3 -4px -4px 8px;
+}
+
+.input-group input[type=number]:focus {
+  background-color: var(--lcd-text);
+  color: var(--lcd-background);
+  filter: brightness(0.75);
+}
+
+/* Display prefixes and suffixes */
+.input-group .inline-text {
+  font-family: 'Funnel Display', Helvetica, Arial, sans-serif;
+  font-size: 4rem;
+  place-self: center;
+}
+
+button#evaluate {
+  --button-height: 4px;
+
+  display: block;
+  margin-inline: auto;
+  font-size: 1rem;
+  padding: 1rem;
+
+  border: var(--text-alt-light) solid 2px;
+  border-radius: 8px;
+
+  box-shadow: var(--text-alt-light) 0 var(--button-height);
+  transition: box-shadow 100ms ease-out, transform 100ms ease-out, background-color 100ms ease-out;
+}
+button:active {
+  background-color: var(--background-main);
+  color: var(--text-main-dark);
+  box-shadow: none !important;
+  transform: translateY(var(--button-height));
+}
+
+#output {
+  display: block;
+  text-align: center;
+  font-family: 'Digital-7 Mono', 'Courier New', Courier, monospace;
+  font-size: 4rem;
+  color: var(--text-main-dark);
+}
+
+/* MEDIA QUERIES FOR SMALLER SCREENS */
+@media screen and (max-width: 600px) {
+  .input-group .inline-text {
+    display: none;
+  }
+
+  .input-group input[type=number] {
+    grid-column: 1 / last;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .input-group label {
+    font-size: 1.25rem;
+  }
+  .input-group input[type=number] {
+    font-size: 4rem;
+  }
+}
