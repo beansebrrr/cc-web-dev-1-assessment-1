@@ -27,9 +27,7 @@ const MP3_FILES = [
 // Container.
 const CONTAINER = document.querySelector("section#soundboard")
 
-/**
- * 3
- */
+
 class ButtonGrid {
   constructor(files) {
     /**

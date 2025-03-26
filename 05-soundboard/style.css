@@ -38,6 +38,13 @@ header>* {
   padding: 0;
 }
 
+main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+
 /* 3x3 grid */
 .audio-page {
   display: grid;
@@ -55,8 +62,8 @@ header>* {
 }
 
 /* Button. */
-.audio-button {
-  --button-height: 12px;
+button {
+  --button-height: 8px;
   --button-color: var(--background-alt-light);
   --button-border-color: #555555;
   --button-border-width: 4px;
@@ -65,19 +72,20 @@ header>* {
   background-color: var(--button-color);
   border: var(--button-border-color) solid var(--button-border-width);
   border-radius: 12px;
-  box-shadow: var(--button-border-color) 0 8px;
+  box-shadow: var(--button-border-color) 0 var(--button-height);
   transition: background-color 100ms linear,
               transform 100ms linear,
               box-shadow 100ms linear;
 }
-.audio-button:hover {
+button:hover {
   background-color: var(--accent-main);
 }
-.audio-button.audio-active {
+button.audio-active,
+button:active {
   background-color: var(--background-main-dark);
   color: var(--text-main-dark);
   box-shadow: none;
-  transform: translateY(calc(var(--button-height) - var(--button-border-width)));
+  transform: translateY(var(--button-height));
 }
 
 .audio-button > * {
@@ -129,4 +137,22 @@ header>* {
 .page-navigator button.disabled:active {
   transform: unset;
   box-shadow: var(--button-border-color) 0 var(--button-height);
+}
+
+/* TEXT TO SPEECH STYLING */
+
+#text-to-speech textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: unset;
+
+  border: var(--background-main-dark) solid 2px;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+#text-to-speech #say {
+  aspect-ratio: 1 / 1;
+  
+  --button-height: 4px;
 }
