@@ -31,6 +31,7 @@ body>* {
 header {
   background-color: var(--background-main-dark);
   color: var(--text-main-dark);
+  text-align: center;
 }
 
 header>* {
@@ -41,9 +42,9 @@ header>* {
 main {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 1rem;
+  grid-template-rows: 3rem 1fr;
+  gap: 2rem;
 }
-
 
 /* 3x3 grid */
 .audio-page {
@@ -55,13 +56,14 @@ main {
   margin-bottom: 12px;
 }
 
-/* Toggles in page-switching */
+/* Toggles through page-switching */
 .audio-page.hidden,
 .audio-page.hidden * {
   display: none;
 }
 
-/* Button. */
+/* ------------ Audio Buttons ------------ */
+
 button {
   --button-height: 8px;
   --button-color: var(--background-alt-light);
@@ -93,14 +95,15 @@ button:active {
   padding: 0;
 }
 
+/* ------------ Previous Page, Next Page ------------ */
+
 .page-navigator {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
   justify-content: end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* Previous Page, Next Page */
 .page-navigator button {
   --button-color: #ffd54b;
   --button-border-color: #b35e1d;
@@ -119,15 +122,10 @@ button:active {
   transition: transform 100ms ease-in, box-shadow 100ms ease-in;
 }
 
-.page-navigator button * {
-  height: 50%;
-}
-
 .page-navigator button:active {
   transform: translateY(var(--button-height));
   box-shadow: none;
 }
-
 
 .page-navigator button.disabled  {
   filter: saturate(0);
@@ -139,20 +137,37 @@ button:active {
   box-shadow: var(--button-border-color) 0 var(--button-height);
 }
 
-/* TEXT TO SPEECH STYLING */
+/* ------------ Text-to-speech Section ------------ */
 
 #text-to-speech textarea {
   width: 100%;
   resize: vertical;
+  min-height: 2rem;
   font-family: unset;
+  margin-bottom: 0.5rem;
 
   border: var(--background-main-dark) solid 2px;
   border-radius: 1rem;
   padding: 1rem;
 }
 
-#text-to-speech #say {
+#text-to-speech button#say {
   aspect-ratio: 1 / 1;
-  
   --button-height: 4px;
+}
+
+/* ------------ Media Queries ------------ */
+
+@media screen and (max-width: 700px) {
+  main {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .audio-page {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: unset;
+  }
 }
