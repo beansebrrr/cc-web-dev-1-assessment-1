@@ -1,0 +1,68 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --background-main-light: #ffffff;
+  --background-main-dark: #212121;
+  --text-main-light: #000000;
+  --text-main-dark: #eeeeee;
+  --accent-main: #ff8b3d;
+
+  --default-inline-padding: min(5rem, 8%);
+
+  background-color: var(--background-main-light);
+  color: var(--text-main-light);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body>* {
+  padding: 1rem var(--default-inline-padding);
+}
+
+header {
+  background-color: var(--accent-main);
+}
+
+header>* {
+  margin: 0;
+  padding: 0;
+}
+
+#choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.color-choice {
+  --border-color: #ececec;
+  --shadow-color: #dddddd;
+  --btn-height: 8px;
+
+  aspect-ratio: 1 / 1;
+  width: 150px;
+  background-color: var(--accent-main);
+  border: var(--border-color) solid 12px;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-color) 0 var(--btn-height);
+  margin-block: 0 var(--btn-height);
+  transition: box-shadow 100ms ease-out,
+              margin-block 100ms ease-out,
+              border 100ms ease-out;
+}
+
+.color-choice:active {
+  --border-color: #a5ffb2;
+  box-shadow: none;
+  margin-block: var(--btn-height) 0;
+}
