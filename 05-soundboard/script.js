@@ -1,5 +1,4 @@
-/* List all the audio files here */
-
+// List all the audio files here 
 const AUDIO_DIRECTORY = "./audio/"
 const MP3_FILES = [
   "ah-ha",
@@ -25,10 +24,12 @@ const MP3_FILES = [
   "what",
   "why-do-why-do",
 ]
+// Container.
 const CONTAINER = document.querySelector("section#soundboard")
 
-
-
+/**
+ * 3
+ */
 class ButtonGrid {
   constructor(files) {
     /**
@@ -55,7 +56,8 @@ class ButtonGrid {
      * Appends the button grid to "container"
      * @param {HTMLElement} container Element where you want to display the button grid
      */
-    this.displayTo = (container) => pages.forEach(page => container.appendChild(page.element)
+    this.displayTo = (container) =>
+      pages.forEach(page => container.appendChild(page.element)
     )
 
     /**
@@ -70,7 +72,7 @@ class ButtonGrid {
 
     /**
      * Nav buttons (previous page, next page)
-     * @param {String} selector CSS Selector
+     * @param {String} selector Nav button's CSS Selector
      * @param {Boolean} reverse Navigate backwards?
      * @param {Number} increment How many pages will be traveled at a time?
      */
@@ -83,7 +85,6 @@ class ButtonGrid {
         this.goToPage(currentPage + increment)
       })
 
-    
       // Disables the buttons if in first and/or last page
       const updateNavAvailability = () => {
         if ((reverse && currentPage <= 1) ||
@@ -95,10 +96,8 @@ class ButtonGrid {
           element.removeAttribute("disabled")
         }
       }
-      document.addEventListener("update-nav-btn", () => {
-        updateNavAvailability()
-      })
       updateNavAvailability()
+      document.addEventListener("update-nav-btn", () => updateNavAvailability())
     }
     this.goToPage(1)
   }
@@ -121,7 +120,7 @@ class Page {
     const produceButtons = () => {
       const buttonsFragment = new DocumentFragment()
       groupList.forEach(filename => {
-        buttonsFragment.appendChild(new AudioButton(filename).element)
+        buttonsFragment.appendChild(AudioButton(filename))
       })
       return buttonsFragment.querySelectorAll(".audio-button")
     }
@@ -129,43 +128,42 @@ class Page {
     produceButtons().forEach(button => {
       page.appendChild(button)
     })
+
+    // Properties I can reference in other parts of the code
     this.element = page;
     this.pageNumber = 0;
-    this.hide = () => {
-      this.element.classList.add("hidden")
-    }
-    this.show = () => {
-      this.element.classList.remove("hidden")
-    }
+
+    // Will be used for switching between pages
+    this.hide = () => this.element.classList.add("hidden")
+    this.show = () => this.element.classList.remove("hidden")
   }
 }
 
 
 
-class AudioButton {
-  constructor(filename) {
-    const btnElement = createElementWithClass("button", "audio-button")
-    const titleElement = createElementWithClass("h3", "audio-title")
-    btnElement.appendChild(titleElement);
-    
-    const src = [AUDIO_DIRECTORY, filename, ".mp3"].join('');
-    const audioElement = btnElement.appendChild(new Audio(src));
+function AudioButton(filename) {
+  const btnElement = createElementWithClass("button", "audio-button")
+  const titleElement = createElementWithClass("h3", "audio-title")
+  btnElement.appendChild(titleElement);
+  
+  // Link the file to the audio element here
+  const src = [AUDIO_DIRECTORY, filename, ".mp3"].join('');
+  const audioElement = btnElement.appendChild(new Audio(src));
 
-    // Alters the filename for a more appropriate button title
-    titleElement.textContent = kebabToSentenceCase(filename);
+  // Alters the filename for a more appropriate button title
+  titleElement.textContent = kebabToSentenceCase(filename);
 
-    // Returns the DOM element
-    this.element = btnElement;
+  // Plays its audio when button is pressed
+  btnElement.addEventListener("click", () => {
+    btnElement.classList.add("audio-active")
+    audioElement.currentTime = 0
+    audioElement.play()
+  })
+  audioElement.addEventListener("ended", () => {
+    btnElement.classList.remove("audio-active")
+  })
 
-    btnElement.addEventListener("click", () => {
-      btnElement.classList.add("audio-active")
-      audioElement.currentTime = 0
-      audioElement.play()
-    })
-    audioElement.addEventListener("ended", () => {
-      btnElement.classList.remove("audio-active")
-    })
-  }
+  return btnElement;
 }
 
 /* --------------------------------------------------------- */
