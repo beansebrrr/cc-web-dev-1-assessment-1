@@ -5,7 +5,7 @@
 }
 
 :root {
-  --background-main-light: #ffffff;
+  --background-main-light: #b9bcd5;
   --background-alt-light: #eeeeee;
   --background-main-dark: #212121;
   --text-main-light: #000000;
@@ -22,6 +22,10 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 }
 
 body>* {
@@ -42,9 +46,12 @@ header>* {
 main {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 3rem 1fr;
   gap: 2rem;
+  flex: 1;
 }
+
+
+/* ------------ Audio Buttons ------------ */
 
 /* 3x3 grid */
 .audio-page {
@@ -62,8 +69,7 @@ main {
   display: none;
 }
 
-/* ------------ Audio Buttons ------------ */
-
+/* The button. */
 button {
   --button-height: 8px;
   --button-color: var(--background-alt-light);
@@ -90,7 +96,7 @@ button:active {
   transform: translateY(var(--button-height));
 }
 
-.audio-button > * {
+button > * {
   margin: 0;
   padding: 0;
 }
@@ -139,11 +145,17 @@ button:active {
 
 /* ------------ Text-to-speech Section ------------ */
 
+#text-to-speech h2 {
+  text-align: center;
+  margin: 1rem;
+}
+
 #text-to-speech textarea {
   width: 100%;
   resize: vertical;
   min-height: 2rem;
   font-family: unset;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
 
   border: var(--background-main-dark) solid 2px;
@@ -153,7 +165,23 @@ button:active {
 
 #text-to-speech button#say {
   aspect-ratio: 1 / 1;
+  font-size: 2rem;
+  padding: 0.5rem;
   --button-height: 4px;
+}
+
+/* ------------ Footer ------------ */
+
+footer {
+  margin-top: auto;
+  background-color: var(--background-main-dark);
+  color: var(--text-main-dark);
+  text-align: center;
+  padding: 1.5rem var(--default-inline-padding);
+}
+footer * {
+  margin: 0;
+  padding: 0;
 }
 
 /* ------------ Media Queries ------------ */
