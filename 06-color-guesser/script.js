@@ -1,14 +1,19 @@
 /**
  * Generates a... random... color... yeah.
- * @param {boolean} returnAsArray Should the function return the color as a string or object?
- * @returns {(Number[]|string)}
+ * @param {boolean} returnAsHex returns hex or rgb()?
+ * @returns {string}
  */
-const generateRandomColor = (returnAsArray=false) => {
-  const r = randomNum(0, 255)
-  const g = randomNum(0, 255)
-  const b = randomNum(0, 255)
-
-  return returnAsArray ? [r, g, b] : `rgb(${r}, ${g}, ${b})`
+const generateRandomColor = (returnAsHex=true) => {
+  let color = [
+    randomNum(0, 255),
+    randomNum(0, 255),
+    randomNum(0, 255),
+  ]
+  if (returnAsHex) {
+    color = color.map(val => val.toString(16).padStart(2, "0"))
+    return ["#", ...color].join("").toUpperCase() 
+  }
+  return `rgb(${r}, ${g}, ${b})`
 }
 
 /**
@@ -37,40 +42,17 @@ const shuffle = (arr) => {
   return arr
 }
 
-class colorChoice {
-  constructor() {
-    let color = this.color;
-    
-    const build = () => {
-      const btn = document.createElement("button")
-      btn.classList.add("color-choice")
-      return btn
-    }
-    
-    /**
-     * @param {string} c `random` or `rgb(255, 135, 66)`
-    */
-   this.setColor = (c = "random") => {
-     color = this.color = c.toLowerCase() === "random" ? generateRandomColor() : c
-     this.element.style.backgroundColor = color
-     return color
-    }
-    this.element = build()
-    this.isCorrect = () => {
-      console.log(color)
-      this.element.addEventListener("click", () => {
-        console.log("celebrate")
-      })
-    }
-  }
-}
+
 
 class Game {
-  constructor() {
-    const correctColor = generateRandomColor()
-
-    const createChoices = (numOfChoices = 3) => {
-      let choices = []
+  constructor(gameContainer) {
+    let choices = [];
+    let correctColor = generateRandomColor()
+    const colorDisplay = gameContainer.querySelector("#color-query>h2")
+    const choiceSection = gameContainer.querySelector("#choices")
+    
+    const createChoices = (numOfChoices) => {
+      choices = []
       // Random Extra Choices
       for (let i = 0; i < numOfChoices - 1; i++) {
         const wrongChoice = new colorChoice()
@@ -82,26 +64,59 @@ class Game {
       correctChoice.setColor(correctColor)
       correctChoice.isCorrect()
       choices.push(correctChoice)
-
+      
       const shuffled = shuffle(choices)
-      this.choices = shuffled
+      this.choices = choices = shuffled
       return shuffled
     }
 
-    const choose = (choice) => {
-      if (choice.color === correctColor) return "Yaeh"
-      return "Naeh"
+    const displayChoices = () => {
+      choiceSection.replaceChildren()
+      choices.forEach(choice => {
+        choiceSection.appendChild(choice.element)
+      })
     }
 
-    this.correctColor = correctColor
-    this.createChoices = createChoices
-    this.choose = choose
 
-    createChoices()
+    class colorChoice {
+      constructor() {
+        let color = this.color;
+        
+        const build = () => {
+          const btn = document.createElement("button")
+          btn.classList.add("color-choice")
+          return btn
+        }
+        
+        /**
+         * @param {string} c `random` or `rgb(255, 135, 66)`
+        */
+       this.setColor = (c = "random") => {
+          color = this.color = c.toLowerCase() === "random" ? generateRandomColor() : c
+          this.element.style.backgroundColor = color
+          return color
+        }
+        this.element = build()
+        this.isCorrect = () => {
+          this.element.addEventListener("click", () => {
+            console.log("yeah")
+            this.element.dispatchEvent(new Event("correct"))
+          })
+        }
+      }
+    }
+
+    this.numOfChoices = 3
+    this.hexMode = true
+    this.start = () => {
+      correctColor = generateRandomColor()
+      colorDisplay.textContent = correctColor
+      createChoices(this.numOfChoices)
+      displayChoices()
+    }
   }
 }
 
-const GAME = new Game()
-const CONTAINER = document.querySelector("#choices")
-
-GAME.choices.forEach(choice => CONTAINER.appendChild(choice.element))
+const CONTAINER = document.querySelector("main")
+const GAME = new Game(CONTAINER)
+GAME.start()
