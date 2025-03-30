@@ -3,8 +3,13 @@
   --nav-hover: #b6b2e3;
   --main-dark: #130d26;
   --accent: #403a80;
-  --sidebar-bg: #29235c;
+  --header-bg: #17072b;
+  --sidebar-bg: #172d67;
+  --footer-bg: #8c15e9;
   --default-padding-inline: min(5rem, 8vw); 
+
+  font-family: Arial;
+  font-weight: 400;
 }
 
 
@@ -43,8 +48,13 @@ footer * {
   margin: 0;
 }
 
+header {
+  background-color: var(--header-bg);
+  font-family: 'Tahoma';
+}
+
 footer {
-  background-color: var(--main-dark);
+  background-color: var(--footer-bg);
   margin-top: auto;
 }
 
