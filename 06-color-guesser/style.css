@@ -36,6 +36,38 @@ header>* {
   padding: 0;
 }
 
+button {
+  --border-color: #dfdfdf;
+  --shadow-color: #b3b3b3;
+  --btn-height: 8px;
+  
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 1.5rem;
+  border: none;
+  box-shadow: var(--shadow-color) 0 var(--btn-height);
+  margin-block: 0 var(--btn-height);
+  transition: box-shadow 100ms ease-out,
+              margin-block 100ms ease-out,
+              background-color 100ms ease-out,
+              color 100ms ease-out,
+              border 100ms ease-out,
+              filter 100ms ease-out;
+}
+
+button:hover {
+  --border-color: #5b94ff;
+  --shadow-color: #7260e7;
+  background-color: var(--border-color);
+  color: var(--text-main-dark);
+}
+
+button:active {
+  filter: brightness(0.9);
+  box-shadow: var(--shadow-color) 0 0;
+  margin-block: var(--btn-height) 0;
+}
+
 #color-query {
   --background-color: #333333;
   width: fit-content;
@@ -48,9 +80,14 @@ header>* {
   border-radius: 0.75rem;
 }
 
-#color-query h2 {
+
+#color-query * {
   text-align: center;
   margin: 0;
+}
+
+#color-query p {
+  margin-bottom: 0.5rem;
 }
 
 #choices {
@@ -62,24 +99,13 @@ header>* {
 }
 
 .color-choice {
-  --border-color: #dfdfdf;
-  --shadow-color: #b3b3b3;
-  --btn-height: 8px;
-
   aspect-ratio: 1 / 1;
   width: 150px;
   background-color: var(--accent-main);
   border: var(--border-color) solid 12px;
-  border-radius: 1.5rem;
-  box-shadow: var(--shadow-color) 0 var(--btn-height);
-  margin-block: 0 var(--btn-height);
-  transition: box-shadow 100ms ease-out,
-              margin-block 100ms ease-out,
-              border 100ms ease-out;
 }
 
-.color-choice:active {
-  --border-color: #5b94ff;
-  box-shadow: var(--border-color) 0 0;
-  margin-block: var(--btn-height) 0;
+#reset {
+  display: block;
+  margin-inline: auto;
 }

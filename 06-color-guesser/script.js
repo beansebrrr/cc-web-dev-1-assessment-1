@@ -13,7 +13,7 @@ const generateRandomColor = (returnAsHex=true) => {
     color = color.map(val => val.toString(16).padStart(2, "0"))
     return ["#", ...color].join("").toUpperCase() 
   }
-  return `rgb(${r}, ${g}, ${b})`
+  return `rgb(${color[0]}, ${color[1]}, ${color[2]})`
 }
 
 /**
@@ -42,14 +42,18 @@ const shuffle = (arr) => {
   return arr
 }
 
+function Game() {
 
+}
 
-class Game {
+class GameRound {
   constructor(gameContainer) {
     let choices = [];
     let correctColor = generateRandomColor()
     const colorDisplay = gameContainer.querySelector("#color-query>h2")
     const choiceSection = gameContainer.querySelector("#choices")
+    const resetBtn = gameContainer.querySelector("#reset")
+    resetBtn.addEventListener("click", () => this.start())
     
     const createChoices = (numOfChoices) => {
       choices = []
@@ -57,6 +61,7 @@ class Game {
       for (let i = 0; i < numOfChoices - 1; i++) {
         const wrongChoice = new colorChoice()
         wrongChoice.setColor()
+        wrongChoice.isWrong()
         choices.push(wrongChoice)
       }
       // Add the correct choice too
@@ -77,39 +82,10 @@ class Game {
       })
     }
 
-
-    class colorChoice {
-      constructor() {
-        let color = this.color;
-        
-        const build = () => {
-          const btn = document.createElement("button")
-          btn.classList.add("color-choice")
-          return btn
-        }
-        
-        /**
-         * @param {string} c `random` or `rgb(255, 135, 66)`
-        */
-       this.setColor = (c = "random") => {
-          color = this.color = c.toLowerCase() === "random" ? generateRandomColor() : c
-          this.element.style.backgroundColor = color
-          return color
-        }
-        this.element = build()
-        this.isCorrect = () => {
-          this.element.addEventListener("click", () => {
-            console.log("yeah")
-            this.element.dispatchEvent(new Event("correct"))
-          })
-        }
-      }
-    }
-
     this.numOfChoices = 3
     this.hexMode = true
     this.start = () => {
-      correctColor = generateRandomColor()
+      correctColor = generateRandomColor(this.hexMode)
       colorDisplay.textContent = correctColor
       createChoices(this.numOfChoices)
       displayChoices()
@@ -117,6 +93,42 @@ class Game {
   }
 }
 
+class colorChoice {
+  constructor() {
+    let color = this.color;
+    const eventCorrect = new CustomEvent("correct", {bubbles : true})
+    const eventWrong = new CustomEvent("wrong", {bubbles : true})
+    
+    const build = () => {
+      const btn = document.createElement("button")
+      btn.classList.add("color-choice")
+      return btn
+    }
+    const setColor = (c = "random") => {
+      color = this.color = c.toLowerCase() === "random" ? generateRandomColor() : c
+      this.element.style.backgroundColor = color
+      return color
+    }
+
+
+    this.setColor = setColor
+    this.element = build()
+    this.isCorrect = () => {
+      this.element.addEventListener("click", () => {
+        console.log("yeah")
+        this.element.dispatchEvent(eventCorrect)
+      })
+    }
+    this.isWrong = () => {
+      this.element.addEventListener("click", () => {
+        console.log("naeh")
+        this.element.dispatchEvent(eventWrong)
+      })
+    }
+  }
+}
+
+
 const CONTAINER = document.querySelector("main")
-const GAME = new Game(CONTAINER)
+const GAME = new GameRound(CONTAINER)
 GAME.start()
