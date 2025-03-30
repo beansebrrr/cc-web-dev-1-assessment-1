@@ -1,13 +1,15 @@
 /**
  * Generates a... random... color... yeah.
- * @returns {Number[]} RGB value of a random color
+ * @returns {(Number[]|String)} RGB value of a random color
  */
-const generateRandomColor = () => {
-  return [
+const generateRandomColor = (returnAsStr) => {
+  const color = [
     randomNum(0, 255),
     randomNum(0, 255),
     randomNum(0, 255),
   ]
+  if (returnAsStr) return `rgb(${color.join(", ")})`
+  return color
 }
 
 /**
@@ -83,7 +85,7 @@ class Choices {
  */
 class ChoiceBtn {
   constructor() {
-    this.color = generateRandomColor()
+    this.color = generateRandomColor(true)
     const make = () => {
       const btn = document.createElement("button")
       btn.classList.add("color-choice")
