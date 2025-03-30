@@ -1,16 +1,13 @@
 /**
  * Generates a... random... color... yeah.
- * @returns {string} Random color's hex value
+ * @returns {Number[]} RGB value of a random color
  */
-const generateRandomColor = (returnAsObject=false) => {
-  let color = [
+const generateRandomColor = () => {
+  return [
     randomNum(0, 255),
     randomNum(0, 255),
     randomNum(0, 255),
   ]
-  if (returnAsObject)
-    return color
-  return `rgb(${color.join(", ")})`
 }
 
 /**
@@ -81,6 +78,9 @@ class Choices {
   }
 }
 
+/**
+ * Automatically generated per round
+ */
 class ChoiceBtn {
   constructor() {
     this.color = generateRandomColor()
@@ -98,44 +98,52 @@ class ChoiceBtn {
   }
 }
 
-const GAME_CONTAINER = document.querySelector("main")
-const EVENT_CORRECT = new Event("correct")
-const EVENT_INCORRECT = new Event("incorrect")
-
+/**
+ * The game. all in one object.
+ */
 class Round {
   constructor() {
+    /* VERY IMPORTANT HTML ELEMENTS */
+    const GAME_CONTAINER = document.querySelector("main")
     const colorDisplay = GAME_CONTAINER.querySelectorAll("#color-prompt>.color>span")
     const choiceContainer = GAME_CONTAINER.querySelector("#choices")
     const resetBtn = GAME_CONTAINER.querySelectorAll(".reset")
     const hearts = GAME_CONTAINER.querySelectorAll("#lives .heart")
     const scoreBoard = GAME_CONTAINER.querySelector("#score .counter")
     const gameOverScreen = GAME_CONTAINER.querySelector("#game-over")
-    let correctColorArr = generateRandomColor(true)
+
+    /* Getting two values. an array (for the colorDisplay), and
+    the default RGB value */
+    let correctColorArr = generateRandomColor()
     let correctColor = `rgb(${correctColorArr.join(", ")})`
-    
+
+    // Initializing these here
     this.score = 0
     const maxLives = 3
     let lives = maxLives
     
+    // An event is dispatched depending on whether the button's color
+    // matches the correctColor
     choiceContainer.addEventListener("click", (e) => {
       const btn = e.target
       if (!btn.classList.contains("color-choice")) return
       
-      console.log(btn.style.backgroundColor)
       if (btn.style.backgroundColor === correctColor) {
-        GAME_CONTAINER.dispatchEvent(EVENT_CORRECT)
+        GAME_CONTAINER.dispatchEvent(new Event("correct"))
         return true
       } else if (btn.style.backgroundColor !== correctColor) {
-        GAME_CONTAINER.dispatchEvent(EVENT_INCORRECT)
+        GAME_CONTAINER.dispatchEvent(new Event("incorrect"))
         return false
       }
     })
     
+    // Set a new... random... color... yeah.
     const newRandomColor = () => {
-      correctColorArr = generateRandomColor(true)
+      correctColorArr = generateRandomColor()
       correctColor = `rgb(${correctColorArr.join(", ")})`
     }
 
+    // Update the displayed values in the Color Prompt
     const displayPrompt = () => {
       let i = 0
       colorDisplay.forEach(child => {
@@ -144,6 +152,8 @@ class Round {
       })
     }
 
+    // Toggle broken hearts depending on how many lives
+    // the player has.
     const updateHearts = () => {
       let i = 0
       hearts.forEach(heart => {
@@ -154,10 +164,13 @@ class Round {
       })
     }
 
+    // I didn't need this in a function but it looks
+    // better like this
     const updateScoreboard = () => {
       scoreBoard.textContent = this.score
     }
     
+    // When a new game starts, this is being run.
     this.setup = () => {
       newRandomColor()
       displayPrompt()
@@ -169,6 +182,7 @@ class Round {
       choiceButtons.displayTo(choiceContainer)
     }
 
+    // Total reset of all the values.
     this.reset = () => {
       this.score = 0
       lives = maxLives
@@ -177,11 +191,13 @@ class Round {
       gameOverScreen.style.display = "none"
     }
 
+    // Game over screen is displayed
     const gameOver = () => {
       gameOverScreen.style.display = "block"
       gameOverScreen.querySelector('.score').textContent = this.score
     }
     
+    // Add to the player's score when the correct button is clicked
     GAME_CONTAINER.addEventListener("correct", () => {
       this.setup()
       this.score++;
@@ -189,7 +205,7 @@ class Round {
       console.log("score:", this.score)
     })
     
-    resetBtn.forEach(btn => btn.addEventListener("click", () => this.reset()))
+    // Deducts a players lives or displays a game over screen
     GAME_CONTAINER.addEventListener("incorrect", () => {
       if (lives > 0){
         lives--
@@ -197,6 +213,9 @@ class Round {
         this.setup()
       } else gameOver()
     })
+
+    // Gives the restart buttons function.
+    resetBtn.forEach(btn => btn.addEventListener("click", () => this.reset()))
   }
 }
 
