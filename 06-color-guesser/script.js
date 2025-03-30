@@ -1,18 +1,14 @@
 /**
  * Generates a... random... color... yeah.
- * @param {boolean} returnAsHex returns hex or rgb()?
  * @returns {string}
  */
-const generateRandomColor = (returnAsHex=true) => {
+const generateRandomColor = () => {
   let color = [
     randomNum(0, 255),
     randomNum(0, 255),
     randomNum(0, 255),
   ]
-  if (returnAsHex) {
-    color = color.map(val => val.toString(16).padStart(2, "0"))
-    return ["#", ...color].join("").toUpperCase() 
-  } else return `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+  return `rgb(${color.join(", ")})`
 }
 
 /**
@@ -32,7 +28,6 @@ const randomNum = (max, min=0) => {
  */
 const shuffle = (arr) => {
   for (let i = arr.length-1; i > 0; i--) {
-    console.log()
     const randIndex = randomNum(i, 0)
     const temp = arr[i]
     arr[i] = arr[randIndex]
@@ -41,13 +36,48 @@ const shuffle = (arr) => {
   return arr
 }
 
-function Round() {
-  const correctColor = generateRandomColor()
+/**
+ * Choice Section
+ */
+class Choices {
+  constructor() {
+    this.list = []
 
-  this.play = () => {
+    /**
+     * Creates a randomized set of choices with one "correct" button.
+     * @param {Number} numOfChoices Default is 3
+     * @param {String} correctColor Color value of the correct color
+     * @returns {HTMLElement[]} A list of the produced choices
+     */
+    this.setup = (numOfChoices = 3, correctColor) => {
+      let choices = []
+      // Create "wrong" choices
+      for (let i = 1; i < numOfChoices; i++) {
+        choices.push(new ChoiceBtn())
+      }
+      // Correct choice is made
+      const correct = new ChoiceBtn()
+      correct.color = correctColor
+      choices.push(correct)
+      
+      // Shuffle around
+      choices = shuffle(choices)
+      this.list = choices
+      return choices
+    }
+
+    /**
+     * Appends all the choice elements to a container
+     * @param {HTMLElement} container Where the choices should be displayed
+     */
+    this.displayTo = (container) => {
+      // Clears container before adding new elements
+      container.replaceChildren()
+      // Add new elements
+      this.list.forEach(choice => choice.displayTo(container))
+    }
   }
 }
-  
 
 class ChoiceBtn {
   constructor() {
@@ -59,14 +89,66 @@ class ChoiceBtn {
       this.element = btn
       return btn
     }
+    this.element = make()
     this.displayTo = (container) => {
       container.appendChild(make())
     }
   }
 }
 
-const main = document.querySelector("main")
-const choicebtn = new ChoiceBtn()
-choicebtn.color = "#000000"
-choicebtn.displayTo(main)
+const GAME_CONTAINER = document.querySelector("main")
+const EVENT_CORRECT = new Event("correct")
+const EVENT_INCORRECT = new Event("incorrect")
+
+class Round {
+  constructor() {
+    const colorDisplay = GAME_CONTAINER.querySelector("#color-prompt>h2")
+    const choiceContainer = GAME_CONTAINER.querySelector("#choices")
+    let correctColor = generateRandomColor()
+
+    this.score = 0
+    this.lives = 5
+    
+    choiceContainer.addEventListener("click", (e) => {
+      const btn = e.target
+      if (!btn.classList.contains("color-choice")) return
+      
+      if (btn.style.backgroundColor === correctColor) {
+        GAME_CONTAINER.dispatchEvent(EVENT_CORRECT)
+        return true
+      } else if (btn.style.backgroundColor !== correctColor) {
+        GAME_CONTAINER.dispatchEvent(EVENT_INCORRECT)
+        return false
+      }
+    })
+    
+    this.setup = () => {
+      correctColor = generateRandomColor()
+      colorDisplay.textContent = correctColor
+
+      const choiceButtons = new Choices()
+      choiceButtons.setup(5, correctColor)
+      choiceButtons.displayTo(choiceContainer)
+    }
+
+    this.reset = () => {
+      this.setup()
+      this.score = 0
+      console.error("Restarted")
+    }
+    
+    GAME_CONTAINER.addEventListener("correct", () => {
+      this.setup()
+      this.score++;
+      console.log("score:", this.score)
+    })
+    GAME_CONTAINER.addEventListener("incorrect", () => this.reset())
+  }
+}
+
+const GAME = new Round()
+GAME.setup()
+
+
+
 
