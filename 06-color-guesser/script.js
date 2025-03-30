@@ -1,13 +1,15 @@
 /**
  * Generates a... random... color... yeah.
- * @returns {string}
+ * @returns {string} Random color's hex value
  */
-const generateRandomColor = () => {
+const generateRandomColor = (returnAsObject=false) => {
   let color = [
     randomNum(0, 255),
     randomNum(0, 255),
     randomNum(0, 255),
   ]
+  if (returnAsObject)
+    return color
   return `rgb(${color.join(", ")})`
 }
 
@@ -102,17 +104,23 @@ const EVENT_INCORRECT = new Event("incorrect")
 
 class Round {
   constructor() {
-    const colorDisplay = GAME_CONTAINER.querySelector("#color-prompt>h2")
+    const colorDisplay = GAME_CONTAINER.querySelectorAll("#color-prompt>.color>span")
     const choiceContainer = GAME_CONTAINER.querySelector("#choices")
-    let correctColor = generateRandomColor()
-
+    const resetBtn = GAME_CONTAINER.querySelector("#reset")
+    const hearts = GAME_CONTAINER.querySelectorAll("#lives .heart")
+    const scoreBoard = GAME_CONTAINER.querySelector("#score .counter")
+    let correctColorArr = generateRandomColor(true)
+    let correctColor = `rgb(${correctColorArr.join(", ")})`
+    
     this.score = 0
-    this.lives = 5
+    const maxLives = 3
+    let lives = maxLives
     
     choiceContainer.addEventListener("click", (e) => {
       const btn = e.target
       if (!btn.classList.contains("color-choice")) return
       
+      console.log(btn.style.backgroundColor)
       if (btn.style.backgroundColor === correctColor) {
         GAME_CONTAINER.dispatchEvent(EVENT_CORRECT)
         return true
@@ -122,33 +130,70 @@ class Round {
       }
     })
     
-    this.setup = () => {
-      correctColor = generateRandomColor()
-      colorDisplay.textContent = correctColor
+    const newRandomColor = () => {
+      correctColorArr = generateRandomColor(true)
+      correctColor = `rgb(${correctColorArr.join(", ")})`
+    }
 
+    const displayPrompt = () => {
+      let i = 0
+      colorDisplay.forEach(child => {
+        child.textContent = correctColorArr[i]
+        i++
+        console.log(i)
+      })
+      console.log(correctColor)
+    }
+
+    const updateHearts = () => {
+      let i = 0
+      hearts.forEach(heart => {
+        if (i >= lives)
+          heart.classList.add("broken")
+        else heart.classList.remove("broken")
+        i++
+      })
+    }
+
+    const updateScoreboard = () => {
+      scoreBoard.textContent = this.score
+    }
+    
+    this.setup = () => {
+      newRandomColor()
+      displayPrompt()
+      updateHearts()
+      updateScoreboard()
+      
       const choiceButtons = new Choices()
       choiceButtons.setup(5, correctColor)
       choiceButtons.displayTo(choiceContainer)
     }
 
     this.reset = () => {
-      this.setup()
       this.score = 0
-      console.error("Restarted")
+      lives = maxLives
+      console.log("Restarted")
+      this.setup()
     }
     
     GAME_CONTAINER.addEventListener("correct", () => {
       this.setup()
       this.score++;
+      updateScoreboard()
       console.log("score:", this.score)
     })
-    GAME_CONTAINER.addEventListener("incorrect", () => this.reset())
+    
+    resetBtn.addEventListener("click", () => this.reset())
+    GAME_CONTAINER.addEventListener("incorrect", () => {
+      if (lives > 0){
+        lives--
+        updateHearts()
+        this.setup()
+      } else this.reset()
+    })
   }
 }
 
 const GAME = new Round()
 GAME.setup()
-
-
-
-

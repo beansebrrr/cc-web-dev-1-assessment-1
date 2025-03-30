@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Digital 7';
+  src: url(./fonts/Digital-7Mono.woff2);
+}
+
 :root {
   --background-main-light: #aab8d3;
   --background-main-dark: #212121;
@@ -68,27 +73,106 @@ button:active {
   margin-block: var(--btn-height) 0;
 }
 
-#color-prompt {
-  --background-color: #333333;
-  width: fit-content;
-  margin: auto;
-  margin-bottom: 3rem;
-  padding: 1rem;
-  background-color: var(--background-color);
-  box-shadow: var(--background-main-dark) 0 0.5rem;
-  color: var(--text-main-dark);
-  border-radius: 0.75rem;
+#status {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+}
+
+#status>* {
+  min-width: 200px;
+  display: grid;
+}
+
+#lives {
+  display: grid;
+  grid-template-columns: repeat(3, 2rem);
+  grid-template-rows: repeat(2, auto);
+  column-gap: 4px;
+  place-items: center;
 }
 
 
-#color-prompt * {
-  text-align: center;
+#lives .label,
+#score .label {
+  grid-column: 1 / last;
   margin: 0;
 }
 
+#lives .label {
+  place-self: start;
+}
+
+#lives .heart {
+  --full-heart: #ff4040;
+  --broken-heart: #484848;
+  fill: var(--full-heart);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  transition: all 200ms linear;
+}
+
+#lives .heart.broken {
+  fill: var(--broken-heart);
+  scale: 0.5;
+}
+
+#score {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  column-gap: 4px;
+  place-items: end;
+}
+
+#score .counter {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+#color-prompt {
+  --background-color: #333333;
+  --display-color: #222222;
+  width: min(600px, 90%);
+  padding: 1rem;
+  background-color: var(--background-color);
+  margin: auto;
+  color: var(--text-main-dark);
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+#color-prompt .label {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+#color-prompt .color {
+  user-select: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  font-family: 'Digital 7';
+  font-size: 4rem;
+}
+#color-prompt .color span {
+  width: calc(3ch + 2rem);
+  padding: 0.5rem 1rem;
+  text-align: end;
+  background-color: var(--display-color);
+  border-radius: 8px;
+  box-shadow: inset #00000030 4px 4px 12px 4px, inset #5f5f5f30 -4px -4px 12px 4px;
+}
+#color-prompt .color span:nth-child(1) {
+  color: #ff6868;
+}
+#color-prompt .color span:nth-child(2) {
+  color: #99ff94;
+}
+#color-prompt .color span:nth-child(3) {
+  color: #7e7eff;
+}
 
 #choices {
   display: flex;
@@ -100,7 +184,7 @@ button:active {
 
 .color-choice {
   aspect-ratio: 1 / 1;
-  width: 150px;
+  width: min(150px, 100%);
   background-color: var(--accent-main);
   border: var(--border-color) solid 12px;
 }
