@@ -4,9 +4,36 @@
   box-sizing: border-box;
 }
 
+@keyframes fade-in {
+  0% { opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes pop-up {
+  0% {
+    scale: 0;
+    translate: 0 200%;
+  }
+  25% {
+    scale: 50%;
+  }
+  100% {
+    scale: 100%;
+    translate: 0 0;
+  }
+}
+
 @font-face {
   font-family: 'Digital 7';
+  font-weight: 400;
+  font-display: swap;
   src: url(./fonts/Digital-7Mono.woff2);
+}
+@font-face {
+  font-family: 'Funnel Display';
+  font-weight: 400;
+  font-display: swap;
+  src: url(./fonts/Funnel-Display-regular.woff2);
 }
 
 :root {
@@ -14,7 +41,7 @@
   --background-main-dark: #212121;
   --text-main-light: #000000;
   --text-main-dark: #eeeeee;
-  --accent-main: #ff8b3d;
+  --accent-main: #3d9bff;
 
   --default-inline-padding: min(5rem, 8%);
 
@@ -23,7 +50,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Funnel Display', Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -33,7 +60,8 @@ body>* {
 }
 
 header {
-  background-color: var(--accent-main);
+  background-color: var(--background-main-light);
+  box-shadow: #1e3f623e 0 8px 24px 8px;
 }
 
 header>* {
@@ -46,6 +74,7 @@ button {
   --shadow-color: #b3b3b3;
   --btn-height: 8px;
   
+  font-family: inherit;
   font-size: 1rem;
   padding: 1rem 1.5rem;
   border-radius: 1.5rem;
@@ -53,7 +82,7 @@ button {
   box-shadow: var(--shadow-color) 0 var(--btn-height);
   margin-block: 0 var(--btn-height);
   transition: box-shadow 100ms ease-out,
-              margin-block 100ms ease-out,
+              transform 100ms ease-out,
               background-color 100ms ease-out,
               color 100ms ease-out,
               border 100ms ease-out,
@@ -70,19 +99,15 @@ button:hover {
 button:active {
   filter: brightness(0.9);
   box-shadow: var(--shadow-color) 0 0;
-  margin-block: var(--btn-height) 0;
+  transform: translateY(var(--btn-height));
 }
 
 #status {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   height: fit-content;
-}
-
-#status>* {
-  min-width: 200px;
-  display: grid;
 }
 
 #lives {
@@ -127,31 +152,37 @@ button:active {
 }
 
 #score .counter {
-  font-size: 1.5rem;
+  font-size: 3rem;
   margin: 0;
+  font-family: 'Digital 7';
 }
 
 #color-prompt {
-  --background-color: #333333;
-  --display-color: #222222;
+  --background-color: #404040;
+  --display-color: #303030;
+  --height: 16px;
   width: min(600px, 90%);
   padding: 1rem;
   background-color: var(--background-color);
-  margin: auto;
+  margin-inline: auto;
   color: var(--text-main-dark);
+  box-shadow: #2c2c2c 0 var(--height);
+  margin-bottom: calc(var(--height) + 2rem);
   border-radius: 0.75rem;
   text-align: center;
 }
 
 #color-prompt .label {
   margin: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
 }
 
 #color-prompt .color {
   user-select: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
   place-items: center;
   font-family: 'Digital 7';
   font-size: 4rem;
@@ -180,6 +211,7 @@ button:active {
   justify-content: center;
   justify-items: center;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .color-choice {
@@ -189,7 +221,57 @@ button:active {
   border: var(--border-color) solid 12px;
 }
 
-#reset {
+.reset {
   display: block;
   margin-inline: auto;
+}
+
+#game-over {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+}
+
+#game-over .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #00000070;
+  z-index: -1;
+  animation: fade-in 750ms ease-in;
+}
+
+#game-over .modal {
+  width: fit-content;
+  margin: auto;
+  transform: translateY(75%);
+  background-color: var(--background-main-light);
+  padding: 2rem;
+  box-shadow: #717b91 0 12px, #0000008e 0 0 24px 8px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pop-up 300ms ease-out;
+}
+
+#game-over .modal * {
+  margin: 0;
+}
+
+#game-over .score {
+  font-size: 4rem;
+}
+
+@media screen and (max-width: 580px) {
+  #color-prompt .color {
+    grid-template-columns: unset;
+  }
+  #color-prompt .color span {
+    width: 100%;
+  }
 }

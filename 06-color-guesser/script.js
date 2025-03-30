@@ -106,9 +106,10 @@ class Round {
   constructor() {
     const colorDisplay = GAME_CONTAINER.querySelectorAll("#color-prompt>.color>span")
     const choiceContainer = GAME_CONTAINER.querySelector("#choices")
-    const resetBtn = GAME_CONTAINER.querySelector("#reset")
+    const resetBtn = GAME_CONTAINER.querySelectorAll(".reset")
     const hearts = GAME_CONTAINER.querySelectorAll("#lives .heart")
     const scoreBoard = GAME_CONTAINER.querySelector("#score .counter")
+    const gameOverScreen = GAME_CONTAINER.querySelector("#game-over")
     let correctColorArr = generateRandomColor(true)
     let correctColor = `rgb(${correctColorArr.join(", ")})`
     
@@ -140,9 +141,7 @@ class Round {
       colorDisplay.forEach(child => {
         child.textContent = correctColorArr[i]
         i++
-        console.log(i)
       })
-      console.log(correctColor)
     }
 
     const updateHearts = () => {
@@ -175,6 +174,12 @@ class Round {
       lives = maxLives
       console.log("Restarted")
       this.setup()
+      gameOverScreen.style.display = "none"
+    }
+
+    const gameOver = () => {
+      gameOverScreen.style.display = "block"
+      gameOverScreen.querySelector('.score').textContent = this.score
     }
     
     GAME_CONTAINER.addEventListener("correct", () => {
@@ -184,13 +189,13 @@ class Round {
       console.log("score:", this.score)
     })
     
-    resetBtn.addEventListener("click", () => this.reset())
+    resetBtn.forEach(btn => btn.addEventListener("click", () => this.reset()))
     GAME_CONTAINER.addEventListener("incorrect", () => {
       if (lives > 0){
         lives--
         updateHearts()
         this.setup()
-      } else this.reset()
+      } else gameOver()
     })
   }
 }
