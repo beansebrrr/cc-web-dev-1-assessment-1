@@ -41,10 +41,11 @@
 /* Some variables (and setting some defaults) */
 :root {
   --background-main-light: #aab8d3;
-  --background-main-dark: #212121;
   --text-main-light: #000000;
   --text-main-dark: #eeeeee;
-  --accent-main: #3d9bff;
+  --red: #ff6868;
+  --green: #99ff94;
+  --blue: #3bb1ff;
 
   --default-inline-padding: min(5rem, 8%);
 
@@ -54,22 +55,58 @@
 
 body {
   font-family: 'Funnel Display', Arial, sans-serif;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 body>* {
   padding: 1rem var(--default-inline-padding);
 }
 
-header {
+header,
+footer {
   background-color: var(--background-main-light);
-  box-shadow: #1e3f623e 0 8px 24px 8px;
+  box-shadow: #1e3f623e 0 0px 32px 16px;
 }
 
-header>* {
+header>*,
+footer>* {
   margin: 0;
   padding: 0;
+}
+
+/* Lets the footer stay at the bottom */
+main {
+  flex: 1;
+}
+
+/* Fancy anchor styling */
+a {
+  --anchor-color: #ff00b3;
+  color: var(--anchor-color);
+  text-decoration: none;
+  position: relative;
+}
+
+a::before {
+  content: "";
+  position: absolute;
+  bottom: -5%;
+  left: 0;
+  background-color: var(--anchor-color);
+  border-radius: 1.5px;
+  width: 0;
+  height: 1.5px;
+  opacity: 0;
+  transition: width 200ms ease-out;
+}
+
+a:hover::before {
+  opacity: 1;
+  width: 100%;
 }
 
 /* Buttons, mainly for the choice buttons */
@@ -83,7 +120,8 @@ button {
   padding: 1rem 1.5rem;
   border-radius: 1.5rem;
   border: none;
-  box-shadow: var(--shadow-color) 0 var(--btn-height);
+  box-shadow: var(--shadow-color) 0 var(--btn-height),
+              #0004 0 calc(var(--btn-height) + 2px) 12px 2px;
   margin-block: 0 var(--btn-height);
   transition: box-shadow 100ms ease-out,
               transform 100ms ease-out,
@@ -94,15 +132,16 @@ button {
 }
 
 button:hover {
-  --border-color: #5b94ff;
-  --shadow-color: #7260e7;
+  --border-color: var(--blue);
+  --shadow-color: #7987e6;
   background-color: var(--border-color);
   color: var(--text-main-dark);
 }
 
 button:active {
   filter: brightness(0.9);
-  box-shadow: var(--shadow-color) 0 0;
+  box-shadow: var(--shadow-color) 0 0,
+              #0004 0 0 12px;
   transform: translateY(var(--btn-height));
 }
 
@@ -135,7 +174,7 @@ button:active {
 }
 
 #lives .heart {
-  --full-heart: #ff4040;
+  --full-heart: #ff0000;
   --broken-heart: #484848;
   fill: var(--full-heart);
   height: 100%;
@@ -173,7 +212,8 @@ button:active {
   background-color: var(--background-color);
   margin-inline: auto;
   color: var(--text-main-dark);
-  box-shadow: #2c2c2c 0 var(--height);
+  box-shadow: #2c2c2c 0 var(--height),
+              #0004 0 calc(var(--height) + 2px) 24px 6px;
   margin-bottom: calc(var(--height) + 2rem);
   border-radius: 0.75rem;
   text-align: center;
@@ -206,15 +246,15 @@ button:active {
 
 /* Red */
 #color-prompt .color span:nth-child(1) {
-  color: #ff6868;
+  color: var(--red);
 }
 /* Green */
 #color-prompt .color span:nth-child(2) {
-  color: #99ff94;
+  color: var(--green);
 }
 /* Blue */
 #color-prompt .color span:nth-child(3) {
-  color: #7e7eff;
+  color: var(--blue);
 }
 
 #choices {
@@ -230,7 +270,7 @@ button:active {
 .color-choice {
   aspect-ratio: 1 / 1;
   width: min(150px, 100%);
-  background-color: var(--accent-main);
+  background-color: var(--blue);
   border: var(--border-color) solid 12px;
 }
 
