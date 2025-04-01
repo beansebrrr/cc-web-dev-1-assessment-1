@@ -1,43 +1,4 @@
 /**
- * Generates a... random... color... yeah.
- * @returns {(Number[]|String)} RGB value of a random color
- */
-const generateRandomColor = (returnAsStr) => {
-  const color = [
-    randomNum(0, 255),
-    randomNum(0, 255),
-    randomNum(0, 255),
-  ]
-  if (returnAsStr) return `rgb(${color.join(", ")})`
-  return color
-}
-
-/**
- * Generates a random whole Number
- * @param {Number} max Maximum
- * @param {Number} min Minimum
- */
-const randomNum = (max, min=0) => {
-  return Math.round(Math.random() * (max - min)) + min 
-}
-
-/**
- * Uses the Fisher-Yates shuffle algorithm
- * https://w.wiki/8Zj
- * @param {Array} arr [1, 2, 3, 4, 5]
- * @returns {Array} Shuffled. [5, 2, 3, 1, 4] or smth
- */
-const shuffle = (arr) => {
-  for (let i = arr.length-1; i > 0; i--) {
-    const randIndex = randomNum(i, 0)
-    const temp = arr[i]
-    arr[i] = arr[randIndex]
-    arr[randIndex] = temp
-  }
-  return arr
-}
-
-/**
  * Choice Section
  */
 class Choices {
@@ -218,6 +179,47 @@ class Round {
     resetBtn.forEach(btn => btn.addEventListener("click", () => this.reset()))
   }
 }
+
+/**
+ * Generates a... random... color... yeah.
+ * @returns {(Number[]|String)} RGB value of a random color
+ */
+const generateRandomColor = (returnAsStr) => {
+  const color = [
+    randomNum(0, 255),
+    randomNum(0, 255),
+    randomNum(0, 255),
+  ]
+  if (returnAsStr) return `rgb(${color.join(", ")})`
+  return color
+}
+
+/**
+ * Generates a random whole Number
+ * @param {Number} max Maximum
+ * @param {Number} min Minimum
+ */
+const randomNum = (max, min=0) => {
+  return Math.round(Math.random() * (max - min)) + min 
+}
+
+/**
+ * Uses the Fisher-Yates shuffle algorithm
+ * https://w.wiki/8Zj
+ * @param {Array} arr [1, 2, 3, 4, 5]
+ * @returns {Array} Shuffled. [5, 2, 3, 1, 4] or smth
+ */
+const shuffle = (arr) => {
+  for (let i = arr.length-1; i > 0; i--) {
+    const randIndex = randomNum(i, 0)
+    const temp = arr[i]
+    arr[i] = arr[randIndex]
+    arr[randIndex] = temp
+  }
+  return arr
+}
+
+/* The game. */
 
 const GAME = new Round()
 GAME.setup()
