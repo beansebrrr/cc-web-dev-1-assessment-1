@@ -169,9 +169,9 @@ class Round {
     
     // Add to the player's score when the correct button is clicked
     GAME_CONTAINER.addEventListener("correct", () => {
-      this.setup()
       this.score++;
       updateScoreboard()
+      this.setup()
       console.log("score:", this.score)
     })
     
