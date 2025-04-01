@@ -209,11 +209,10 @@ class Round {
     
     // Deducts a players lives or displays a game over screen
     GAME_CONTAINER.addEventListener("incorrect", () => {
-      if (lives > 0){
-        lives--
-        updateHearts()
-        this.setup()
-      } else gameOver()
+      lives--
+      this.setup()
+      updateHearts()
+      if (lives < 1) gameOver()
     })
 
     // Gives the restart buttons function.
