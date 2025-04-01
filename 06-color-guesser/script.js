@@ -15,8 +15,16 @@ class Choices {
       let choices = []
       // Create "wrong" choices
       for (let i = 1; i < numOfChoices; i++) {
+        let btn;
+        // Ensures that a "correct" choice won't accidentally
+        // be made (the chances are never zero lol).
+        do {
+          btn = new ChoiceBtn()
+        } while (btn.color === correctColor)
+        
         choices.push(new ChoiceBtn())
       }
+
       // Correct choice is made
       const correct = new ChoiceBtn()
       correct.color = correctColor
@@ -76,8 +84,8 @@ class Round {
 
     /* Getting two values. an array (for the colorDisplay), and
     the default RGB value */
-    let correctColorArr = generateRandomColor()
-    let correctColor = `rgb(${correctColorArr.join(", ")})`
+    let correctColorArr = new Array()
+    let correctColor = new String()
 
     // Initializing these here
     this.score = 0
@@ -100,7 +108,7 @@ class Round {
     })
     
     // Set a new... random... color... yeah.
-    const newRandomColor = () => {
+    const newCorrectColor = () => {
       correctColorArr = generateRandomColor()
       correctColor = `rgb(${correctColorArr.join(", ")})`
     }
@@ -134,7 +142,7 @@ class Round {
     
     // When a new game starts, this is being run.
     this.setup = () => {
-      newRandomColor()
+      newCorrectColor()
       displayPrompt()
       updateHearts()
       updateScoreboard()
