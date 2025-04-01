@@ -93,7 +93,6 @@ class ChoiceBtn {
       this.element = btn
       return btn
     }
-    this.element = make()
     this.displayTo = (container) => {
       container.appendChild(make())
     }
